@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Jogo de Adivinhação</title>
+  <style>
+    body {
+      font-family: Arial;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      padding: 50px;
+    }
+
+    .container {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    input {
+      padding: 10px;
+      width: 80%;
+      border-radius: 10px;
+      border: none;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background: #22c55e;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #16a34a;
+    }
+
+    .mensagem {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>🎯 Adivinhe o Número</h1>
+    <p>Tente adivinhar (1 a 10)</p>
+
+    <input type="number" id="palpite" placeholder="Digite seu número">
+    <br>
+    <button onclick="verificar()">Tentar</button>
+
+    <div class="mensagem" id="mensagem"></div>
+  </div>
+
+  <script>
+    let numeroSecreto = Math.floor(Math.random() * 10) + 1;
+    let tentativas = 5;
+
+    function verificar() {
+      let input = document.getElementById("palpite");
+      let mensagem = document.getElementById("mensagem");
+      let valor = Number(input.value);
+
+      if (!valor) {
+        mensagem.innerText = "Digite um número!";
+        return;
+      }
+
+      if (tentativas <= 0) {
+        mensagem.innerText = "Você perdeu! O número era " + numeroSecreto;
+        return;
+      }
+
+      if (valor === numeroSecreto) {
+        mensagem.innerText = "🎉 Parabéns! Você acertou!";
+        tentativas = 0;
+      } else {
+        tentativas--;
+
+        if (valor > numeroSecreto) {
+          mensagem.innerText = "O número é menor! Tentativas restantes: " + tentativas;
+        } else {
+          mensagem.innerText = "O número é maior! Tentativas restantes: " + tentativas;
+        }
+
+        if (tentativas === 0) {
+          mensagem.innerText = "💀 Você perdeu! O número era " + numeroSecreto;
+        }
+      }
+
+      input.value = "";
+      input.focus();
+    }
+  </script>
+
+</body>
+</html>
